@@ -116,3 +116,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Faust settings (used in faustapp/app.py)
+FAUST_BROKER_URL = 'kafka://localhost:9092'
+FAUST_STORE_URL = 'rocksdb://'
