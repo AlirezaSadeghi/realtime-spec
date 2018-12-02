@@ -117,6 +117,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# Faust settings (used in faustapp/app.py)
-FAUST_BROKER_URL = 'kafka://localhost:9092'
+# Kafka Settings
+KAFKA_HOSTS = 'localhost:9092'
+
+INTERACTION_TOPIC = 'interactions'
+
+# Faust Settings
+FAUST_BROKER_URL = 'kafka://%s' % KAFKA_HOSTS
 FAUST_STORE_URL = 'rocksdb://'
