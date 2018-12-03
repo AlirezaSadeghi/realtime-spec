@@ -11,6 +11,20 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import json
+
+
+def get_env_var(key, default=None):
+    value = os.environ.get(key)
+
+    if value and ',' in value:
+        return [val.strip() for val in value.split(',') if val.strip()]
+
+    if value:
+        return value
+
+    return default
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -118,10 +132,26 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Kafka Settings
-KAFKA_HOSTS = 'localhost:9092'
-
+KAFKA_HOSTS = get_env_var('KAFKA_HOSTS', 'localhost:9092')
+KAFKA_PRODUCER_CONFIG = {
+    'acks': -1,
+    'linger_ms': 25,
+    'bootstrap_servers': KAFKA_HOSTS,
+    'value_serializer': lambda v: json.dumps(v).encode('utf-8'),
+    'retries': 5
+}
 INTERACTION_TOPIC = 'interactions'
 
-# Faust Settings
-FAUST_BROKER_URL = 'kafka://%s' % KAFKA_HOSTS
-FAUST_STORE_URL = 'rocksdb://'
+# MongoDB Settings
+MONGODB_CONFIG = {
+    'host': get_env_var('MONGODB_HOST', '127.0.0.1'),
+    'port': get_env_var('MONGODB_PORT', 27017)
+}
+
+# Redis Settings
+REDIS_CONFIG = {
+    'host': get_env_var('REDIS_HOST', '127.0.0.1'),
+    'port': get_env_var('REDIS_PORT', 6379),
+    'db': get_env_var('REDIS_DB', 0),
+    'decode_responses': True
+}
