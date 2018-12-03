@@ -66,7 +66,7 @@ setup(
     entry_points={
         'console_scripts': [
             'tapad = realtime.__main__:main',
-            'consumer = realtime.consumer.app:main',
+            'consumer = realtime.consumer.agents:main',
         ],
     },
 )

@@ -1,8 +1,22 @@
+import os
+
+import faust
 import logging
 
-from realtime.consumer import app
+import django
+from django.conf import settings
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'realtime.settings.base')
+
+django.setup()
 
 logger = logging.getLogger(__name__)
+
+app = faust.App('tapad', broker=settings.KAFKA_HOSTS)
+
+
+def main():
+    app.main()
 
 
 @app.agent()
