@@ -19,7 +19,7 @@ class UtilityHelper:
             timestamp = datetime.utcfromtimestamp(ts)
             if timestamp > datetime.now():
                 return False
-        except ValueError:
+        except (ValueError, OverflowError):
             return False
         return True
 

@@ -69,3 +69,5 @@ The project should be reasonably scalable.
 You can spawn more Faust workers to increase throughput of message processing.
 We can have an Nginx instance reverse-proxy-ing requests into different django instances running on different ports.
 
+**Test**
+To run tests, just run ``python manage.py test`` on the root of the project, for now, code coverage is too low anyways.
