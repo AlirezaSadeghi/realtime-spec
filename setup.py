@@ -65,7 +65,7 @@ setup(
     long_description=readme.read_text(encoding='utf-8'),
     entry_points={
         'console_scripts': [
-            'tapad = manage:main',
+            'tapad = realtime.__main__:main',
             'consumer = realtime.consumer.app:main',
         ],
     },
