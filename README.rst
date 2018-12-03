@@ -34,6 +34,8 @@ requirements
     - Python >= 3.6
     - Django >= 2.1
     - Faust
+    - Redis
+    - Pymongo >= 3.7
 
 We use ``Django 2.1`` to create the HTTP(S) server and the API endpoints, we also stick to a Django-`ish` project layout.
 We also use ``Faust``, it's basically a Kafka Stream Processing library written in Python, since it uses the newly introduced
@@ -50,4 +52,20 @@ after ``python setup.py install`` the ``tapad`` command, as well as the ``consum
 
     It's the same as running ``python manage.py runserver``, but it will
     be installed in your system path and well it's easier.
+
+
+In order for the project ot fully run, you need to have
+    - Apache Kafka (and well zookeeper) running on localhost:9092
+    - Redis running on localhost:6379
+    - MongoDB running on localhost:27017
+
+for the addresses, the defaults are brought above, but you can change them through env-vars.
+Unfortunately I couldn't find enough time to wrap all dependent services into a docker image, and that's for the future.
+
+**Scalability**
+
+The project should be reasonably scalable.
+
+You can spawn more Faust workers to increase throughput of message processing.
+We can have an Nginx instance reverse-proxy-ing requests into different django instances running on different ports.
 
